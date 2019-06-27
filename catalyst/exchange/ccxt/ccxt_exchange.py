@@ -64,11 +64,14 @@ class CCXT(Exchange):
             else:
                 exchange_attr = getattr(ccxt, exchange_name)
 
-            self.api = exchange_attr({
+            params = {
                 'apiKey': key,
                 'secret': secret,
                 'password': password,
-            })
+            }
+            if exchange_name == 'bittrex':
+                params['hostname'] = 'international.bittrex.com'
+            self.api = exchange_attr(params)
             self.api.enableRateLimit = True
 
         except Exception:

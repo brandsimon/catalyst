@@ -71,6 +71,9 @@ class CCXT(Exchange):
             }
             if exchange_name == 'bittrex':
                 params['hostname'] = 'international.bittrex.com'
+            elif exchange_name == 'binancedex':
+                params['walletAddress'] = key
+                params['privateKey'] = secret
             self.api = exchange_attr(params)
             self.api.enableRateLimit = True
 

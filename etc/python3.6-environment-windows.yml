@@ -13,7 +13,7 @@ dependencies:
 - pip=9.0.1
 - python=3.6.4
 - scipy=1.0.0
-- setuptools=38.4.0=py36_0
+- setuptools=41.0.1
 - sqlite=3.22.0
 - tk=8.6.7
 - wheel=0.30.0

@@ -2,6 +2,7 @@ import copy
 import json
 import os
 import re
+from functools import lru_cache
 from collections import defaultdict
 
 import ccxt
@@ -502,6 +503,7 @@ class CCXT(Exchange):
         else:
             return candles
 
+    @lru_cache(maxsize=32)
     def _fetch_symbol_map(self, is_local):
         try:
             return self.fetch_symbol_map(is_local)

@@ -619,6 +619,7 @@ class CCXT(Exchange):
             # TODO: add as an optional column
             params['leverage'] = 1.0
 
+        params['trading_state'] = params.get('trading_state', True)
         return TradingPair(**params)
 
     def load_assets(self):

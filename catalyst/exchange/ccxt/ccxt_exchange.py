@@ -46,6 +46,7 @@ SUPPORTED_EXCHANGES = dict(
     hitbtc=ccxt.hitbtc2,
     kucoin=ccxt.kucoin,
 )
+setattr(ccxt, 'bittrex_international', getattr(ccxt, 'bittrex'))
 
 
 class CCXT(Exchange):
@@ -57,23 +58,24 @@ class CCXT(Exchange):
             )
         )
         try:
-            # Making instantiation as explicit as possible for code tracking.
-            if exchange_name in SUPPORTED_EXCHANGES:
-                exchange_attr = SUPPORTED_EXCHANGES[exchange_name]
-
-            else:
-                exchange_attr = getattr(ccxt, exchange_name)
-
             params = {
                 'apiKey': key,
                 'secret': secret,
                 'password': password,
             }
-            if exchange_name == 'bittrex':
+            if exchange_name == 'bittrex_international':
                 params['hostname'] = 'international.bittrex.com'
+                exchange_name = 'bittrex'
             elif exchange_name == 'binancedex':
                 params['walletAddress'] = key
                 params['privateKey'] = secret
+
+            # Making instantiation as explicit as possible for code tracking.
+            if exchange_name in SUPPORTED_EXCHANGES:
+                exchange_attr = SUPPORTED_EXCHANGES[exchange_name]
+            else:
+                exchange_attr = getattr(ccxt, exchange_name)
+
             self.api = exchange_attr(params)
             self.api.enableRateLimit = True
 
